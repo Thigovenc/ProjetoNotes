@@ -2,6 +2,7 @@ import {Container,Links} from './styles'
 import {Button} from '../../components/Button'
 import { Header } from '../../components/Header'
 import { Section } from '../../components/Section'
+import {Tag} from '../../components/Tag'
 
 export function Details(){
   return(
@@ -16,6 +17,11 @@ export function Details(){
             <a href="https://react.dev/">https://react.dev/</a>
           </li>
         </Links>
+      </Section>
+
+      <Section title="Marcadores">
+        <Tag title="NodeJS"/>
+        <Tag title="ReactJS"/>
       </Section>
       <Button title="voltar"/>
     </Container>
