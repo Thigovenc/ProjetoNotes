@@ -4,12 +4,12 @@ import { createRoot } from 'react-dom/client'
 import {ThemeProvider} from 'styled-components'
 import GlobalStyles from './styles/global'
 import theme from './styles/theme'
-import {Details} from './pages/Details/index'
+import {Home} from './pages/Home'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode >
     <ThemeProvider theme={theme}>
-      <Details/>
+      <Home/>
       <GlobalStyles/>
     </ThemeProvider>
   </StrictMode>,
