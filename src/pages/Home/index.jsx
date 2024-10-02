@@ -1,6 +1,6 @@
 import {Container, Brand, Menu, Search,Content, NewNote} from './styles'
 import {Header} from '../../components/Header'
-
+import {ButtonText} from '../../components/ButtonText'
 
 export function Home(){
     return(
@@ -10,7 +10,9 @@ export function Home(){
             </Brand>
             <Header/>
             <Menu>
-
+                <li><ButtonText title="React" isActive></ButtonText></li>
+                <li><ButtonText title="NodeJs"></ButtonText></li>
+                <li><ButtonText title="NextJS"></ButtonText></li>
             </Menu>
             <Search>
 
@@ -19,7 +21,7 @@ export function Home(){
 
             </Content>
             <NewNote>
-                
+
             </NewNote>
         </Container>
     )
