@@ -1,67 +1,87 @@
 import { useState } from "react";
-import {Header} from "../../components/Header";
-import {Input} from "../../components/Input"
-import {Textarea} from "../../components/Textarea"
-import {Container,Form} from "./styles";
+import { Header } from "../../components/Header";
+import { Input } from "../../components/Input";
+import { Textarea } from "../../components/Textarea";
+import { Container, Form } from "./styles";
 import { NoteItem } from "../../components/NoteItem";
-import {Section} from "../../components/Section"
-import {Button} from "../../components/Button"
+import { Section } from "../../components/Section";
+import { Button } from "../../components/Button";
 import { Link } from "react-router-dom";
-import { preview } from "vite";
 
-export function New(){
-    const [links,setLinks] = useState([]);
-    const [newLink, setNewLink] = useState("")
+export function New() {
+  const [links, setLinks] = useState([]);
+  const [newLink, setNewLink] = useState("");
+  
+  const [tags, setTags] = useState([]);
+  const [newTag, setNewTag] = useState("");
 
-    function handleAddLink(){
-        setLinks(prevState => [...prevState, newLink]);
-        setNewLink("");
-    }
+  function handleAddLink() {
+    setLinks((prevState) => [...prevState, newLink]);
+    setNewLink("");
+  }
 
-    function  handleRemoveLink(deleted){
-        setLinks(prevState => prevState.filter(item => link !== deleted))
-    }
+  function handleRemoveLink(deleted) {
+    setLinks((prevState) => prevState.filter((link) => link !== deleted));
+  }
 
+  function handleAddTag() {
+    setTags((prevState) => [...prevState, newTag]);
+    setNewTag("");
+  }
 
-    return(
-        <Container>
-            <Header/>
-            <main>
-                <Form>
-                    <header>
-                        <h1>Criar Nota</h1>
-                        <Link to="/">Voltar</Link>
-                    </header>
+  function handleRemoveTag(deleted) {
+    setTags((prevState) => prevState.filter((tag) => tag !== deleted));
+  }
 
-                    <Input placeholder="Titulo"/>
-                    <Textarea placeholder="Observacoes"/>
-                    <Section title="Links Uteis">
-                        {
-                            links.map((link, index)=>(
-                                <NoteItem
-                                    key={String(index)}
-                                    value={link}
-                                    onClick={() => handleRemoveLink(link)}
-                                />
-                            ))
-                        }
-                        <NoteItem 
-                            isNew 
-                            placeholder="Novo link"
-                            onChange= {e => setNewLink(e.target.value)}
-                            onClick={handleAddLink}
-                        />
-                    </Section>
+  return (
+    <Container>
+      <Header />
+      <main>
+        <Form>
+          <header>
+            <h1>Criar Nota</h1>
+            <Link to="/">Voltar</Link>
+          </header>
 
-                    <Section title="Marcadores">
-                        <div className="tags">
-                            <NoteItem value="https://github.com/thigovenc"/>
-                            <NoteItem isNew placeholder="Novo link"/>
-                        </div>
-                    </Section>
-                    <Button title="Salvar"/>
-                </Form>
-            </main>
-        </Container>
-    )
+          <Input placeholder="Titulo" />
+          <Textarea placeholder="Observacoes" />
+          <Section title="Links Uteis">
+            {links.map((link, index) => (
+              <NoteItem
+                key={String(index)}
+                value={link}
+                onClick={() => handleRemoveLink(link)}
+              />
+            ))}
+            <NoteItem
+              isNew
+              placeholder="Novo link"
+              onChange={(e) => setNewLink(e.target.value)}
+              onClick={handleAddLink}
+            />
+          </Section>
+
+          <Section title="Marcadores">
+            <div className="tags">
+              {tags.map((tag, index) => (
+                <NoteItem
+                  key={String(index)}
+                  value={tag}
+                  onClick={() => handleRemoveTag()}
+                />
+              ))}
+              <NoteItem
+                isNew
+                placeholder="Nova tag"
+                onChange={(e) => setNewTag(e.target.value)}
+                value={newTag}
+                onClick={handleAddTag}
+              />
+            </div>
+          </Section>
+          <Button title="Salvar" />
+        </Form>
+      </main>
+    </Container>
+  );
 }
