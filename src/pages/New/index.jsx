@@ -7,6 +7,7 @@ import { NoteItem } from "../../components/NoteItem";
 import {Section} from "../../components/Section"
 import {Button} from "../../components/Button"
 import { Link } from "react-router-dom";
+import { preview } from "vite";
 
 export function New(){
     const [links,setLinks] = useState([]);
@@ -16,6 +17,11 @@ export function New(){
         setLinks(prevState => [...prevState, newLink]);
         setNewLink("");
     }
+
+    function  handleRemoveLink(deleted){
+        setLinks(prevState => prevState.filter(item => link !== deleted))
+    }
+
 
     return(
         <Container>
@@ -35,7 +41,7 @@ export function New(){
                                 <NoteItem
                                     key={String(index)}
                                     value={link}
-                                    onClick={()=>{}}
+                                    onClick={() => handleRemoveLink(link)}
                                 />
                             ))
                         }
