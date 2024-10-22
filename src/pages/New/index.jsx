@@ -6,9 +6,10 @@ import { Container, Form } from "./styles";
 import { NoteItem } from "../../components/NoteItem";
 import { Section } from "../../components/Section";
 import { Button } from "../../components/Button";
-import { Link } from "react-router-dom";
 import { api } from "../../services/api";
 import { useNavigate } from "react-router-dom";
+import { ButtonText } from "../../components/ButtonText";
+
 export function New() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -20,6 +21,10 @@ export function New() {
   const [newTag, setNewTag] = useState("");
 
   const navigate = useNavigate();
+
+  function handleBack() {
+    navigate(-1);
+  }
 
   function handleAddLink() {
     setLinks((prevState) => [...prevState, newLink]);
@@ -40,16 +45,19 @@ export function New() {
   }
 
   async function handleNewNote() {
+    if (!title) {
+      return alert("Digite o titulo da nota");
+    }
 
-    if (!title){
-        return alert("Digite o titulo da nota")
+    if (newTag) {
+      return alert(
+        "Voce deixou uma tag no campo para adicionar, mas nao clicou em adicionar. Clique para adicionar ou deixe o campo vazio."
+      );
     }
-    
-    if(newTag){
-        return alert("Voce deixou uma tag no campo para adicionar, mas nao clicou em adicionar. Clique para adicionar ou deixe o campo vazio.")
-    }
-    if(newLink){
-        return alert("Voce deixou um link no campo para adicionar, mas nao clicou em adicionar. Clique para adicionar ou deixe o campo vazio.")
+    if (newLink) {
+      return alert(
+        "Voce deixou um link no campo para adicionar, mas nao clicou em adicionar. Clique para adicionar ou deixe o campo vazio."
+      );
     }
 
     await api.post("/notes", {
@@ -58,8 +66,8 @@ export function New() {
       tags,
       links,
     });
-    alert("Nota criada com Sucesso")
-    navigate("/")
+    alert("Nota criada com Sucesso");
+    navigate(-1);
   }
 
   return (
@@ -69,7 +77,7 @@ export function New() {
         <Form>
           <header>
             <h1>Criar Nota</h1>
-            <Link to="/">Voltar</Link>
+            <ButtonText title="voltar" onClick={handleBack}></ButtonText>
           </header>
 
           <Input
@@ -115,10 +123,7 @@ export function New() {
               />
             </div>
           </Section>
-          <Button 
-            title="Salvar" 
-            onClick = {handleNewNote}
-            />
+          <Button title="Salvar" onClick={handleNewNote} />
         </Form>
       </main>
     </Container>
