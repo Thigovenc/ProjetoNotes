@@ -7,7 +7,7 @@ import { Section } from "../../components/Section";
 import { Note } from "../../components/Note";
 import { useState, useEffect } from "react";
 import { api } from "../../services/api";
-
+import {useNavigate} from 'react-router-dom'
 export function Home() {
   const [tags, setTags] = useState([]);
   const [tagsSelected, setTagsSelected] = useState([]);
@@ -29,6 +29,12 @@ export function Home() {
     }
   }
 
+  const navigate = useNavigate();
+
+  function handleDetails(id){
+    navigate(`/datails/${id}`);
+
+  }
   useEffect(() => {
     async function fetchTags() {
       const response = await api.get("/tags");
@@ -84,7 +90,7 @@ export function Home() {
       <Content>
         <Section title="Minha Notas">
           {notes.map((note) => (
-            <Note key={String(note.id)}data={note} />
+            <Note key={String(note.id)}data={note} onClick={() => handleDetails(note.id)}/>
           ))}
         </Section>
       </Content>
