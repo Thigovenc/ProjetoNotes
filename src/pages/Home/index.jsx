@@ -7,6 +7,7 @@ import { Section } from "../../components/Section";
 import { Note } from "../../components/Note";
 import { useState, useEffect } from "react";
 import { api } from "../../services/api";
+
 export function Home() {
   const [tags, setTags] = useState([]);
   const [tagsSelected, setTagsSelected] = useState([]);
@@ -77,7 +78,7 @@ export function Home() {
         <Input
           placeholder="Pesquisar pelo titulo"
           icon={FiSearch}
-          onChange={() => setSearch(e.target.value)}
+          onChange={(e) => setSearch(e.target.value)}
         />
       </Search>
       <Content>
