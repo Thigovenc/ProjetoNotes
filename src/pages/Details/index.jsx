@@ -1,43 +1,63 @@
-import {Container,Links,Content} from './styles'
-import {Button} from '../../components/Button'
-import { Header } from '../../components/Header'
-import { Section } from '../../components/Section'
-import { ButtonText } from '../../components/ButtonText'
-import {Tag} from '../../components/Tag'
+import { Container, Links, Content } from "./styles";
+import { Button } from "../../components/Button";
+import { Header } from "../../components/Header";
+import { Section } from "../../components/Section";
+import { ButtonText } from "../../components/ButtonText";
+import { Tag } from "../../components/Tag";
+import { useParams, useNavigate} from "react-router-dom";
+import { useEffect, useState } from "react";
+import { api } from "../../services/api";
 
-export function Details(){
-  return(
+export function Details() {
+  const [data, setData] = useState(null);
+
+  const params = useParams();
+  const navigate = useNavigate();
+
+  function handleBack(){
+    navigate("/")
+  }
+  useEffect(() => {
+    async function fetchNote() {
+      const response = await api.get(`/notes/${params.id}`);
+      setData(response.data);
+    }
+
+    fetchNote();
+  }, []);
+  return (
     <Container>
-      <Header/>
-
-      <main>
-        <Content>
-          <ButtonText title="Excluir Nota"/>
-          <h1>Introducao a React</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-            Id reprehenderit voluptatibus impedit accusantium eos maxime 
-            ut blanditiis alias aperiam animi! Numquam ullam perferendis 
-            libero beatae explicabo doloribus ipsam corporis praesentium.</p>
-          <Section title="Links Uteis"> {/*O children vai pegar tudo que esta aqui dentro  */}
-            <Links>
-              <li>
-                <a href="https://react.dev/">https://react.dev/</a>
-              </li>
-              <li>
-                <a href="https://react.dev/">https://react.dev/</a>
-              </li>
-            </Links>
-          </Section>
-
-          <Section title="Marcadores">
-            <Tag title="NodeJS"/>
-            <Tag title="ReactJS"/>
-          </Section>
-          <Button title="voltar"/>
-        </Content>
-      </main>
+      <Header />
+      {data && (
+        <main>
+          <Content>
+            <ButtonText title="Excluir Nota" />
+            <h1>{data.title}</h1>
+            <p>{data.description}</p>
+            {data.links && (
+              <Section title="Links Uteis">
+                {" "}
+                {/*O children vai pegar tudo que esta aqui dentro  */}
+                <Links>
+                  {data.links.map((link) => (
+                    <li key={String(link.id)}>
+                      <a href={link.url} target="_blank">{link.url}</a>
+                    </li>
+                  ))}
+                </Links>
+              </Section>
+            )}
+            {data.tags && (
+              <Section title="Marcadores">
+                {data.tags.map((tag) => (
+                  <Tag key={String(tag.id)} title={tag.name}/>
+                ))}
+              </Section>
+            )}
+            <Button title="voltar" onClick= {handleBack} />
+          </Content>
+        </main>
+      )}
     </Container>
-  )
+  );
 }
-
-
