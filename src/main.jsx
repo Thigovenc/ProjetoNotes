@@ -12,7 +12,7 @@ import { AuthProvider } from "./hooks/auth";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <GlobalStyles />
+        <GlobalStyles />
         <AuthProvider>
           <Routes />
         </AuthProvider>
