@@ -7,7 +7,12 @@ import { Section } from "../../components/Section";
 import { Note } from "../../components/Note";
 import { useState, useEffect } from "react";
 import { api } from "../../services/api";
+<<<<<<< HEAD
 import {useNavigate} from 'react-router-dom'
+=======
+import { useNavigate } from "react-router-dom";
+
+>>>>>>> refs/remotes/origin/main
 export function Home() {
   const [tags, setTags] = useState([]);
   const [tagsSelected, setTagsSelected] = useState([]);
@@ -15,9 +20,8 @@ export function Home() {
   const [notes, setNotes] = useState([]);
 
   function handleTagSelected(tagName) {
-
-    if(tagName === "all"){
-        return setTagsSelected([])
+    if (tagName === "all") {
+      return setTagsSelected([]);
     }
     const alreadySelected = tagsSelected.includes(tagName);
 
@@ -31,9 +35,14 @@ export function Home() {
 
   const navigate = useNavigate();
 
+<<<<<<< HEAD
   function handleDetails(id){
     navigate(`/datails/${id}`);
 
+=======
+  function handleDetails(id) {
+    navigate(`/details/${id}`);
+>>>>>>> refs/remotes/origin/main
   }
   useEffect(() => {
     async function fetchTags() {
@@ -90,7 +99,15 @@ export function Home() {
       <Content>
         <Section title="Minha Notas">
           {notes.map((note) => (
+<<<<<<< HEAD
             <Note key={String(note.id)}data={note} onClick={() => handleDetails(note.id)}/>
+=======
+            <Note
+              key={String(note.id)}
+              data={note}
+              onClick={() => handleDetails(note.id)}
+            />
+>>>>>>> refs/remotes/origin/main
           ))}
         </Section>
       </Content>
